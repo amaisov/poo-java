@@ -42,7 +42,6 @@ public class Calculadora {
         switch(operacion) {
             case 1:
                 suma(num1, num2);
-
                 System.out.println(" Has seleccionado operacion 1 ");
                 break;
             case 2:
@@ -67,13 +66,7 @@ public class Calculadora {
             default:
                 System.out.println(" tu opercion a sido erronia vuelve a seleccionar ");
                 return;   
-        
-        }
-        
-        
-            
-        
-        
+        } 
     }
 
     static void suma(int a, int b) {
@@ -102,5 +95,3 @@ public class Calculadora {
     }
 
  }
-
-        
