@@ -8,7 +8,13 @@ funcines: SUMa, RESTA, MUTIPLICACCION, DIVISION, MODULO. finalmente obtener el r
  */
 package com.amaisov.calculadora;
 
+
+
+
 import java.util.Scanner;
+
+
+
 
 /**
  *
@@ -75,6 +81,7 @@ public class Calculadora {
 
     } 
 
+    
     static void suma(int a, int b) {
         int suma = a + b;
         System.out.println(" la suma de a+b es: " + suma);
