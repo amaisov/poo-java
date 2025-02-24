@@ -1,3 +1,5 @@
+package com.amaisov.usuario.video;
+
 
 import com.amaisov.usuario.video.Video;
 
@@ -21,11 +23,16 @@ public class Usuario {
     
     public void verVideo(Video video){
         System.out.println(nombre +" video el video"+ video.getTitulo());
-        video. reproducir();
+        video.reproducir();
     }
     
     public String obtenerNombre(){
         return nombre;
+    }
+    
+    public void comentarVideo(Video video, String texto){
+        Comentario comentario = new Comentario(video, texto);
+        System.out.println(comentario.verComentario());
     }
       
 }

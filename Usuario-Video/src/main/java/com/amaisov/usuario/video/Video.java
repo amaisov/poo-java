@@ -19,13 +19,14 @@ package com.amaisov.usuario.video;
     }
     
     public void reproducir(){
-        System.out.println("reproducir el video"+titulo);
+        System.out.println(" reproduciendo el video: " +titulo);
 
 }
 
     public void detener(){
-        System.out.println("se detubo el video"+ titulo);
+        System.out.println(" se detubo el video: " + titulo);
 }
+    
     public String getTitulo(){
         return titulo;
     }
