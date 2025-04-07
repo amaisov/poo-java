@@ -16,16 +16,13 @@ import java.util.Vector;
 public class ControlNotas extends JFrame {
 
     private JTabbedPane tabbedPane;
-    private JTable estudianteTable, materiasTable, gruposTable, notasTable;
-    private DefaultTableModel estudianteModel, materiasMobel, gruposModel, notasModel;
-    private JTextField estudianteField, materiasField, grupoField;
-    private JButton addEstudianteButton, addMateriasButton, addGrupoButton, addNotasButton;
+    private JTable estudiantesTable, materiasTable, gruposTable, notasTable;
+    private DefaultTableModel estudiantesModel, materiasModel, gruposModel, notasModel;
+    private JTextField estudianteField, grupoField, materiaField;
+    private JButton addEstudianteButton, addMateriaButton, addGrupoButton, addNotaButton;
     private JComboBox<String> estudianteCombo, grupoCombo;
-    private DefaultTableModel estudiantesModel;
-    private JTable estudiantesTable;
-    private PopupMenu addMateriaButton;
-    private DefaultTableModel materiasModel;
-    private PopupMenu addNotaButton;
+  
+  
 
     public ControlNotas() {
         setTitle("sistema de control notas");
@@ -54,9 +51,9 @@ public class ControlNotas extends JFrame {
 
         String[] columnNames = {" Nombre", "Eliminar "};
         estudiantesModel = new DefaultTableModel(columnNames, 0);
-        estudiantesTable = new JTable(estudianteModel);
+        estudiantesTable = new JTable(estudiantesModel);
 
-        addEstudianteButton.addActionListener(e -> {
+        addEstudianteButton.addActionListener(e-> {
             agregarElemento(estudianteField, estudiantesModel);
             actualizarComboBox(estudiantesModel, estudianteCombo);
         });
@@ -70,7 +67,8 @@ public class ControlNotas extends JFrame {
     private JPanel createMateriasPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         JPanel inputPanel = new JPanel(new GridLayout(1, 3, 5, 5));
-        JTextField materiaField = new JTextField();
+        materiaField= new JTextField();
+        addMateriaButton = new JButton("Agregar Materia");
         inputPanel.add(new JLabel(" Materia: "));
         inputPanel.add(materiaField);
         inputPanel.add(addMateriaButton);
@@ -79,11 +77,11 @@ public class ControlNotas extends JFrame {
         materiasModel = new DefaultTableModel(columnNames, 0);
         materiasTable = new JTable(materiasModel);
 
-        addMateriaButton.addActionListener(e -> agregarElemento(materiaField, materiasModel));
+        addMateriaButton.addActionListener(e->agregarElemento(materiaField, materiasModel));
+        
         panel.add(inputPanel, BorderLayout.NORTH);
         panel.add(new JScrollPane(materiasTable), BorderLayout.CENTER);
         return panel;
-
     }
 
     private JPanel createGruposPanel() {
@@ -99,7 +97,7 @@ public class ControlNotas extends JFrame {
         gruposModel = new DefaultTableModel(columnNames, 0);
         gruposTable = new JTable(gruposModel);
 
-        addGrupoButton.addActionListener(e -> {
+        addGrupoButton.addActionListener(e-> {
             agregarElemento(grupoField, gruposModel);
             actualizarComboBox(gruposModel, grupoCombo);
 
@@ -117,7 +115,7 @@ public class ControlNotas extends JFrame {
         estudianteCombo = new JComboBox<>();
         grupoCombo = new JComboBox<>();
         JTextField notaField = new JTextField();
-        addNotasButton = new JButton(" Agregar Nota ");
+        addNotaButton = new JButton(" Agregar Nota ");
         inputPanel.add(new JLabel(" Estudiante:"));
         inputPanel.add(estudianteCombo);
         inputPanel.add(new JLabel(" Grupo "));
@@ -130,7 +128,8 @@ public class ControlNotas extends JFrame {
         notasModel = new DefaultTableModel(columnNames, 0);
         notasTable = new JTable(notasModel);
 
-        addNotaButton.addActionListener(e -> agregarNota(estudianteCombo, grupoCombo, notaField));
+        panel.add(inputPanel, BorderLayout.NORTH);
+        panel.add(new JScrollPane(notasTable), BorderLayout.CENTER);
         return panel;
 
     }
@@ -162,7 +161,7 @@ public class ControlNotas extends JFrame {
             notaField.setText("");
 
         } else {
-            JOptionPane.showMessageDialog(this, " Debe seleccionar estudiante,grupo y asignaturauna un nota");
+            JOptionPane.showMessageDialog(this, " Debe seleccionar estudiante,grupo y asignaturauna un nota","Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
