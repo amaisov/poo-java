@@ -45,9 +45,43 @@ public class ControlNotas extends JFrame {
         JPanel inputPanel = new JPanel(new GridLayout(1, 2, 5, 5));
         estudianteField = new JTextField();
         addEstudianteButton = new JButton(" Agregar Estudiante ");
+        JButton modifyEstudianteButton = new JButton("Modificar Estudiante");
+        
         inputPanel.add(new JLabel(" Nombre "));
         inputPanel.add(estudianteField);
         inputPanel.add(addEstudianteButton);
+        inputPanel.add(modifyEstudianteButton);
+        
+        modifyEstudianteButton.addActionListener(e -> {
+        int selectedRow = estudiantesTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String newValue = JOptionPane.showInputDialog(this, "Ingrese el nuevo valor:");
+            if (newValue != null && !newValue.isEmpty()) {
+                estudiantesModel.setValueAt(newValue, selectedRow, 0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    });
+
+    
+// Agregar botón para eliminar elementos
+    JButton eliminarButton = new JButton("Eliminar");
+    eliminarButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int filaSeleccionada = estudiantesTable.getSelectedRow();
+            if (filaSeleccionada != -1) {
+                estudiantesModel.removeRow(filaSeleccionada);
+                estudiantesModel.fireTableDataChanged();
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila para eliminar.");
+            }
+        }
+    });
+    inputPanel.add(eliminarButton);
+
+        
 
         String[] columnNames = {" Nombre", "Eliminar "};
         estudiantesModel = new DefaultTableModel(columnNames, 0);
@@ -72,7 +106,7 @@ public class ControlNotas extends JFrame {
         inputPanel.add(new JLabel(" Materia: "));
         inputPanel.add(materiaField);
         inputPanel.add(addMateriaButton);
-
+       
         String[] columnNames = {" Materia ", " Eliminar "};
         materiasModel = new DefaultTableModel(columnNames, 0);
         materiasTable = new JTable(materiasModel);
@@ -89,9 +123,37 @@ public class ControlNotas extends JFrame {
         JPanel inputPanel = new JPanel(new GridLayout(1, 2, 5, 5));
         grupoField = new JTextField();
         addGrupoButton = new JButton(" Agregar Grupo ");
-        inputPanel.add(new JLabel(" Grupo: "));
+        JButton modifyMateriaButton = new JButton("Modificar Materia");
         inputPanel.add(grupoField);
         inputPanel.add(addGrupoButton);
+        inputPanel.add(modifyMateriaButton);
+        
+        modifyMateriaButton.addActionListener(e -> {
+        int selectedRow = materiasTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String newValue = JOptionPane.showInputDialog(this, "Ingrese el nuevo valor:");
+            if (newValue != null && !newValue.isEmpty()) {
+                materiasModel.setValueAt(newValue, selectedRow, 0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    });
+     
+       // Agregar botón para eliminar elementos
+    JButton eliminarButton = new JButton("Eliminar");
+    eliminarButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int filaSeleccionada = materiasTable.getSelectedRow();
+            if (filaSeleccionada != -1) {
+               materiasModel.removeRow(filaSeleccionada);
+               materiasModel.fireTableDataChanged();
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila para eliminar.");
+            }
+        }
+    });
 
         String[] columnNames = {" Grupo ", " Eliminar "};
         gruposModel = new DefaultTableModel(columnNames, 0);
@@ -116,6 +178,8 @@ public class ControlNotas extends JFrame {
         grupoCombo = new JComboBox<>();
         JTextField notaField = new JTextField();
         addNotaButton = new JButton(" Agregar Nota ");
+        JButton modifyNotaButton = new JButton("Modificar ");
+        
         inputPanel.add(new JLabel(" Estudiante:"));
         inputPanel.add(estudianteCombo);
         inputPanel.add(new JLabel(" Grupo "));
@@ -123,6 +187,36 @@ public class ControlNotas extends JFrame {
         inputPanel.add(new JLabel("Notas."));
         inputPanel.add(notaField);
         inputPanel.add(addNotaButton);
+        inputPanel.add(modifyNotaButton);
+        
+        modifyNotaButton.addActionListener(e -> {     //3
+        int selectedRow = notasTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String newValue = JOptionPane.showInputDialog(this, "Ingrese el nuevo valor:");
+            if (newValue != null && !newValue.isEmpty()) {
+                notasModel.setValueAt(newValue, selectedRow, 0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    });
+    
+    
+     // Agregar botón para eliminar elementos
+    JButton eliminarButton = new JButton("Eliminar");
+    eliminarButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int filaSeleccionada = notasTable.getSelectedRow();
+            if (filaSeleccionada != -1) {
+               notasModel.removeRow(filaSeleccionada);
+                notasModel.fireTableDataChanged();
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila para eliminar.");
+            }
+        }
+    });
+    inputPanel.add(eliminarButton);
 
         String[] columnNames = {" Eestudiante", " Grupo", " Nota ", " Elimilar"};
         notasModel = new DefaultTableModel(columnNames, 0);
@@ -145,6 +239,16 @@ public class ControlNotas extends JFrame {
         }
     }
 
+    private void eliminarElemento(JTextField field, DefaultTableModel model) {
+        String text = field.getText().trim();
+        if (!text.isEmpty()) {
+            model.addRow(new Object[]{text, "Eliminar"});
+            field.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un valor.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void actualizarComboBox(DefaultTableModel model, JComboBox<String> comboBox) {
         comboBox.removeAllItems();
         for (int i = 0; i < model.getRowCount(); i++) {
